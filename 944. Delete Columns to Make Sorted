@@ -1,0 +1,87 @@
+/**
+You are given an array of n strings strs, all of the same length.
+
+The strings can be arranged such that there is one on each line, making a grid. For example, strs = ["abc", "bce", "cae"] can be arranged as:
+
+abc
+bce
+cae
+You want to delete the columns that are not sorted lexicographically. In the above example (0-indexed), columns 0 ('a', 'b', 'c') and 2 ('c', 'e', 'e') are sorted while column 1 ('b', 'c', 'a') is not, so you would delete column 1.
+
+Return the number of columns that you will delete.
+
+ 
+
+Example 1:
+
+Input: strs = ["cba","daf","ghi"]
+Output: 1
+Explanation: The grid looks as follows:
+  cba
+  daf
+  ghi
+Columns 0 and 2 are sorted, but column 1 is not, so you only need to delete 1 column.**/
+
+class Solution {
+    fun minDeletionSize(strs: Array<String>): Int =
+        (0 until strs[0].length).count { i ->
+            (0 until strs.lastIndex).any { j ->
+                strs[j][i] > strs[j + 1][i]
+            }
+        }
+}
+
+fun minDeletionSize(strs: Array<String>): Int {
+val n = strs[0].length
+    var res = 0
+    var i = 0
+while (i<n){
+        for (j in 1 until strs.size){
+            if (strs[j-1][i]>strs[j][i]){
+                res++
+                break
+            }
+        }
+    i++
+    }
+    return res
+}
+
+
+class Solution {
+    fun minDeletionSize(strs: Array<String>): Int {
+             
+      val table: Array<Array<Int>> = Array(strs.size, { Array(strs[0].length, {0}) })
+      
+      var stroka = 0
+      var stolb = 0
+      for(it in strs) {
+          stroka = 0
+          for (char in it) {
+              table[stolb][stroka] = char.toInt()
+              stroka++
+          }
+          stolb++
+      }
+      var delete = 0
+      var temp = 0
+      var error = false
+        
+      for(cell in 0..table[0].size-1){
+ 
+        for(element in 0..table.size-1){
+           if (temp > table[element][cell])
+           error = true 
+           temp = table[element][cell]
+        }
+        temp = 0
+        if (error) {
+            error = false
+            delete++
+        }
+      }
+      
+      
+      return delete
+    }
+}
