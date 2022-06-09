@@ -1,0 +1,84 @@
+//**
+Given an array nums of n integers where nums[i] is in the range [1, n], return an array of all the integers in the range [1, n] that do not appear in nums.
+
+ 
+
+Example 1:
+
+Input: nums = [4,3,2,7,8,2,3,1]
+Output: [5,6]
+Example 2:
+
+Input: nums = [1,1]
+Output: [2]
+**/
+class Solution {
+    fun findDisappearedNumbers(nums: IntArray): List<Int> {
+   
+     var i = 0
+        var pos = 0
+        while( i < nums.size) {
+            pos = nums[i] -1
+          //  println("pos = nums[pos] -1// $pos = ${nums[pos]} -1 ")
+            if ((nums[i]) != (nums[pos])) {
+              //  println("(nums[i]) != (nums[pos])// ${(nums[i])} != ${(nums[pos])} ")
+            var temp = nums[pos];
+            nums[pos] = nums[i];
+             //   println("nums[pos] = nums[i]// ${nums[pos]} = ${nums[i]}")
+            nums[i] = temp 
+           // println("nums[i] = temp // ${nums[i]} = ${temp }")
+            }
+            else {
+                i++
+            }
+        }
+        var array = mutableListOf<Int>()
+        
+        for (y in 0..nums.size-1) {
+           // println("nums[] = $y")
+            if (nums[y] != (y + 1))
+            array.add(y + 1)
+        }                    
+ 
+      return array
+      //return array.toList()
+    } 
+}
+fun findDisappearedNumbers(nums: IntArray): List<Int> {
+    val answer = mutableListOf<Int>()
+    for (number in nums) {
+        val newIndex = Math.abs(number) - 1
+        if (nums[newIndex] > 0) {
+            nums[newIndex] *= -1
+        }
+    }
+    for (index in 1 .. nums.size) {
+        if (nums[index-1] > 0) {
+            answer.add(index)
+        }
+    }
+    return answer
+    }
+
+class Solution {
+    fun findDisappearedNumbers(nums: IntArray): List<Int> {
+   
+        var numsSet = nums.toSet()
+       val n = nums.size                
+       val l = n - numsSet.size       
+       var array = IntArray(l) 
+       var ind = 0
+        var start = 1        
+        for(i in 1..n) {         
+          if (start in numsSet){
+              start++}
+              else {
+               array[ind] = start 
+                ind++ 
+                start++  
+              }          
+       }  
+
+      return array.toList()
+    } 
+}
