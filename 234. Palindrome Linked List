@@ -1,0 +1,62 @@
+/**
+Given the head of a singly linked list, return true if it is a palindrome. 
+
+Example 1:
+
+Input: head = [1,2,2,1]
+Output: true
+Example 2:
+
+Input: head = [1,2]
+Output: false
+**/
+/**
+ * Example:
+ * var li = ListNode(5)
+ * var v = li.`val`
+ * Definition for singly-linked list.
+ * class ListNode(var `val`: Int) {
+ *     var next: ListNode? = null
+ * }
+ */
+class Solution {
+    
+    fun isPalindrome(head: ListNode?): Boolean {
+        
+       var middle = middleNode(head)
+       var reverse = reverseList(middle)
+       var head = head
+        
+        while (reverse!=null) {
+            if ((reverse!!.`val`)!=(head!!.`val`)) {
+              return false  
+            }            
+            reverse = reverse.next
+            head = head.next 
+            
+        }
+        return true
+    }
+    
+     fun middleNode(head: ListNode?): ListNode? {
+      var fast = head
+      var slow = head
+      while ((fast != null)&&(fast?.next != null)) {
+           fast = fast?.next?.next            
+           slow = slow?.next                                  
+        } 
+        return slow               
+              }
+     
+      fun reverseList(head: ListNode?): ListNode? {
+      var prev: ListNode? = null
+      var correct = head
+      while (correct != null) {
+        val nxt = correct?.next            
+           correct.next = prev
+           prev = correct
+           correct = nxt
+        } 
+        return prev            
+              }
+}
