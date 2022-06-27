@@ -21,7 +21,35 @@ Output: 5
  *     var right: TreeNode? = null
  * }
  */
+ 
+ class Solution {//recursive
+    fun minDepth(root: TreeNode?): Int {
+        return when {
+            root == null -> 0
+            root.right == null -> 1 + minDepth(root.left)
+            root.left == null -> 1 + minDepth(root.right)
+            else -> 1 + Math.min(minDepth(root.left), minDepth(root.right))
+        }
+    }
+}
 class Solution {
+fun minDepth(root: TreeNode?): Int {
+        var level = 1
+        val queue: Queue<TreeNode> = ArrayDeque()
+        root?.let { queue += root }
+        while (queue.isNotEmpty()) {
+            repeat (queue.size) {
+                val node = queue.remove()
+                if (node.left == null && node.right == null) return level
+                node.left?.let { queue += it }
+                node.right?.let { queue += it }
+            }
+            level++
+        }     
+        return 0
+    }
+}
+class Solution { //mine
     fun minDepth(root: TreeNode?): Int {
            var ans: MutableList<Double> = ArrayList()
         if (root == null) {
