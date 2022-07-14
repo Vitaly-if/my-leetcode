@@ -1,0 +1,64 @@
+/*
+Given a string s, you can transform every letter individually to be lowercase or uppercase to create another string.
+Return a list of all possible strings we could create. Return the output in any order.
+Example 1:
+Input: s = "a1b2"
+Output: ["a1b2","a1B2","A1b2","A1B2"]
+Example 2:
+Input: s = "3z4"
+Output: ["3z4","3Z4"]*/class Solution {
+ fun letterCasePermutation(S: String): List<String> {
+  var res = mutableListOf("")
+  for (c in S){
+    var next = mutableListOf<String>()
+    while (res.isNotEmpty()){
+      val str = res.removeAt(0)
+      if (c.isDigit()){
+        next.add(str + c)
+      } else {
+        next.add(str + c.toLowerCase()) 
+        next.add(str + c.toUpperCase()) 
+      }
+    }
+    res = next
+  }
+  return res
+}
+}
+fun letterCasePermutation(s: String): List<String> {
+	var result: List<String> = listOf("")
+
+	for(c in s){
+		val aux: MutableList<String> = mutableListOf()
+		for(i in result.indices){
+			if(c.isLetter()){
+				aux.add(result[i] + c.toLowerCase())
+				aux.add(result[i] + c.toUpperCase())
+			} else {
+				aux.add(result[i] + c)
+			}
+		}
+		result = aux
+	}
+	return result
+}
+fun letterCasePermutation(s: String): List<String> {
+	val result: MutableList<String> = mutableListOf()
+	permute(result, s)
+	return result
+}
+
+
+private fun permute(result: MutableList<String>, s: String, curr: String = "") {
+	if(curr.length == s.length) {
+		result.add(curr)
+	} else {
+		val c = s[curr.length]
+		if(c.isLetter()){
+			permute(result, s, curr + c.toUpperCase())
+			permute(result, s, curr + c.toLowerCase())
+		} else {
+			permute(result, s, curr + c)
+		}
+	}      
+}
