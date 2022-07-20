@@ -1,0 +1,54 @@
+Given an integer array nums that may contain duplicates, return all possible subsets (the power set).
+The solution set must not contain duplicate subsets. Return the solution in any order.
+Example 1:
+Input: nums = [1,2,2]
+Output: [[],[1],[1,2],[1,2,2],[2],[2,2]]
+Example 2:
+Input: nums = [0]
+Output: [[],[0]]
+class Solution { //my
+    fun subsetsWithDup(nums: IntArray): List<List<Int>> {
+     val N = nums.size
+        nums.sort()
+        val result: MutableList<ArrayList<Int>> = arrayListOf()
+        if (N == 0) return listOf(listOf())
+        
+        fun backtrack(index: Int, currentSet: ArrayList<Int>)  {
+            if (ArrayList(currentSet) in result) 
+            println("yes")
+            else {
+            result.add(ArrayList(currentSet))
+            for (i in index until N) {
+                //if (i != index && nums[i - 1] == nums[i]) continue
+                currentSet.add(nums[i])
+                backtrack(i + 1, currentSet)
+                currentSet.removeAt(currentSet.lastIndex)
+            }
+        }
+        }
+        backtrack(0, arrayListOf())
+        return result
+    }
+}
+class Solution {
+    fun subsetsWithDup(nums: IntArray): List<List<Int>> {
+     val N = nums.size
+        nums.sort()
+        val result: MutableList<ArrayList<Int>> = arrayListOf()
+        if (N == 0) return listOf(listOf())
+        
+        fun backtrack(index: Int, currentSet: ArrayList<Int>)  {
+            
+            result.add(ArrayList(currentSet))
+            for (i in index until N) {
+                if (i != index && nums[i - 1] == nums[i]) continue
+                currentSet.add(nums[i])
+                backtrack(i + 1, currentSet)
+                currentSet.removeAt(currentSet.lastIndex)
+            }
+        }
+        
+        backtrack(0, arrayListOf())
+        return result
+    }
+}
